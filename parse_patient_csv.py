@@ -14,3 +14,11 @@ def split_finding(finding):
       cond_list[conditions[condition]] = 1
   return(cond_list)
 
+if __name__ == "__main__":
+  pd.get_dummies(data = patient_data, columns = ["Patient Gender", "View Position"])
+  # What happens after the get_dummies? I need to select the binary variables in the following section, rather than the original ones.
+  
+  columns = ["Image Index", "Patient Age", "Patient Gender", "View Position"]
+  subset_data = patient_data[columns]
+  subset_data["conditions"] = [split_finding(i) for i in patient_data["Finding Labels"]]
+  pd.to_csv(r"\relevant_patient_data.csv")
