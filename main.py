@@ -25,6 +25,8 @@ for image_path in list_of_files:
 image_array = np.asarray(image_list)
 conditions_array = np.asarray(conditions_list)
 
+# Do a train-test split that corresponds to the same indexes in both image_array and conditions_array
+
 image_only = image_only()
 image_only.model.fit(image_array, conditions_array)
 
