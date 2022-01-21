@@ -4,8 +4,6 @@ from PIL import Image
 import os
 import pandas as pd
 
-# load in images as a np array
-# image_array = np.ndarray((1024,1024))
 subset = pd.read_csv("subset.csv")
 
 list_of_files = []
@@ -19,11 +17,15 @@ image_list = []
 conditions_list = []
 for image_path in list_of_files:
     image = Image.open(image_path)
-    image_list.append(np.asarray(image))
-    # image_array = np.append(image_array, np.asarray(image), axis = 0)
+    conditions = np.asarray(subset.loc[subset["Image_Index"]==filename]["Conditions"].to_list()[0][1:-1].split(".")[0:14]).astype('float32')
+    image_conditions_pair = {"image":np.asarray(image), "conditions":conditions}
+    
+    image_list.append(image_conditions_pair["image"])
+    conditions_list.append(image_conditions_pair["conditions"])
     
 image_array = np.asarray(image_list)
+conditions_array = np.asarray(conditions_list)
 
 image_only = image_only()
-image_only.model.fit(image_array)
+image_only.model.fit(image_array, conditions_array)
 
