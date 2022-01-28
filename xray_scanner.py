@@ -1,6 +1,6 @@
 # Imports
-# TensorFlow and tf.keras
-import tensorflow as tf
+# TensorFlow and keras
+import tensorflow.keras as keras
 
 # Helper libraries
 import numpy as np
@@ -22,14 +22,21 @@ Images should be fed to the model in a (image no., width, height) ndarray
 
 class image_only:
   def __init__(self):
-    self.model = tf.keras.Sequential([
-        tf.keras.layers.Flatten(input_shape=(1024, 1024)),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(14)
+    self.model = keras.Sequential([
+        keras.layers.Rescaling(1./255, input_shape=(1024,1024))
+        keras.layers.Conv2D(16, activation='relu')
+        keras.layers.MaxPooling2D((2, 2))
+        keras.layers.Conv2D(32, activation='relu')
+        keras.layers.MaxPooling2D((2, 2))
+        keras.layers.Conv2D(64, activation='relu')
+        keras.layers.MaxPooling2D((2, 2))
+        keras.layers.Flatten(input_shape=(1024, 1024)),
+        keras.layers.Dense(128, activation='relu'),
+        keras.layers.Dense(14)
     ])
 
     self.model.compile(optimizer='adam',
-                  loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
+                  loss=keras.losses.CategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
     
