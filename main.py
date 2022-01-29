@@ -18,9 +18,11 @@ image_list = []
 conditions_list = []
 for image_path in list_of_files:
     image = Image.open(image_path)
-    conditions = np.asarray(subset.loc[subset["Image_Index"]==filename]["Conditions"].to_list()[0][1:-1].split(".")[0:14]).astype('float32')
+    conditions = np.asarray(subset.loc[subset["Image_Index"]==image_path.split("\\")[1]]["Conditions"].to_list()[0][1:-1].split(".")[0:14]).astype('float32')
     image_list.append(np.asarray(image))
     conditions_list.append(conditions)
+    print(image)
+    print(conditions)
     
 image_array = np.asarray(image_list)
 conditions_array = np.asarray(conditions_list)

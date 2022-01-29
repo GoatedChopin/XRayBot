@@ -17,14 +17,14 @@ Images should be fed to the model in a (image no., width, height) ndarray
 class image_only:
   def __init__(self):
     self.model = keras.Sequential([
-        keras.layers.Rescaling(1./255, input_shape=(1024,1024)),
-        keras.layers.Conv2D(16, activation='relu'),
+        # keras.layers.experimental.preprocessing.Rescaling(1./255, input_shape=(1024,1024)),
+        keras.layers.Conv2D(16, (1,1), activation='relu', input_shape=(1024,1024,1)),
         keras.layers.MaxPooling2D((2, 2)),
-        keras.layers.Conv2D(32, activation='relu'),
+        keras.layers.Conv2D(32, (1,1), activation='relu'),
         keras.layers.MaxPooling2D((2, 2)),
-        keras.layers.Conv2D(64, activation='relu'),
+        keras.layers.Conv2D(64, (1,1), activation='relu'),
         keras.layers.MaxPooling2D((2, 2)),
-        keras.layers.Flatten(input_shape=(1024, 1024)),
+        keras.layers.Flatten(),
         keras.layers.Dense(128, activation='relu'),
         keras.layers.Dense(14)
     ])
