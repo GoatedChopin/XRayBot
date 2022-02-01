@@ -33,5 +33,21 @@ class image_only:
                   loss=keras.losses.CategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
+class image_only_from_generator:
+  def __init__(self):
+    self.model = keras.Sequential([
+        keras.layers.Conv2D(filters=32, kernel_size=2, activation='relu', input_shape=(256,256,1)),
+        keras.layers.MaxPool2D(pool_size=2, strides=2),
+        keras.layers.Conv2D(filters=32, kernel_size=2, activation='relu'),
+        keras.layers.MaxPool2D(pool_size=2, strides=2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(units=128, activation='relu'),
+        keras.layers.Dense(units=1, activation="softmax")
+    ])
+
+    self.model.compile(optimizer='adam',
+                  loss=keras.losses.CategoricalCrossentropy(from_logits=True),
+                  metrics=['accuracy'])
+
     
     
