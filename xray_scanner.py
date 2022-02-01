@@ -34,7 +34,7 @@ class image_only:
                   metrics=['accuracy'])
 
 class image_only_from_generator:
-  def __init__(self):
+  def __init__(self, output_shape=1):
     self.model = keras.Sequential([
         keras.layers.Conv2D(filters=32, kernel_size=2, activation='relu', input_shape=(256,256,1)),
         keras.layers.MaxPool2D(pool_size=2, strides=2),
@@ -42,7 +42,7 @@ class image_only_from_generator:
         keras.layers.MaxPool2D(pool_size=2, strides=2),
         keras.layers.Flatten(),
         keras.layers.Dense(units=128, activation='relu'),
-        keras.layers.Dense(units=1, activation="softmax")
+        keras.layers.Dense(units=output_shape, activation="softmax")
     ])
 
     self.model.compile(optimizer='adam',
